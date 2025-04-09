@@ -1,152 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <button class = "mic"></button>
-    <p class="status"></p>
-    <p class="transcribed"></p>
-    <button class="camera">Take Picture</button>
-    <div class="camera-container">
-        <video class="video" autoplay></video>
-        <canvas class="canvas" style="display: none;"></canvas>
-        <img class="captured-image" alt="Captured Image" style="display: none;">
-    </div>
-    <button class="send-query">Send Query</button>
-    <div class="response"></div>
-    <script>
-        const cameraButton = document.querySelector('.camera');
-        const video = document.querySelector('.video');
-        const canvas = document.querySelector('.canvas');
-        const capturedImage = document.querySelector('.captured-image');
-
-        const sendQuery = document.querySelector('.send-query');
-
-        let buttonStatus = false;
-        const button = document.querySelector('.mic');
-        const status = document.querySelector('.status');
-        const transcribed = document.querySelector('.transcribed');
-        transcribed.innerHTML = ''
-        button.innerHTML = 'Turn On the Microphone';
-        let mediaRecorder;
-        let chunks = [];
-
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(error => {
-                console.error('Error accessing camera:', error);
-                status.innerText = 'Camera access denied.';
-            });
-
-        cameraButton.addEventListener('click', () => {
-            const context = canvas.getContext('2d');
-            canvas.width = 200;
-            canvas.height = 100;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageDataURL = canvas.toDataURL('image/png');
-            capturedImage.src = imageDataURL;
-            capturedImage.style.display = 'block';
-        });
-
-        
-        
-        navigator.mediaDevices.getUserMedia({ audio: true, camera:true })
-            .then(stream => {
-            mediaRecorder = new MediaRecorder(stream);
-
-            mediaRecorder.ondataavailable = event => {
-                chunks.push(event.data);
-            };
-
-            mediaRecorder.onstop = () => {
-                const audioBlob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
-                chunks = [];
-                const formData = new FormData();
-                formData.append('audio',audioBlob, 'audio.ogg');
-                fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    transcribed.innerText = data.text;
-                })
-                .catch(error => {
-                    console.error('Error uploading audio:', error);
-                    status.innerText = 'Error uploading audio.';
-                    transcribed.innerText = '';
-                });
-            };
-            })
-            .catch(error => {
-            console.error('Error accessing microphone:', error);
-            status.innerText = 'Microphone access denied.';
-            });
-
-        button.addEventListener('click', () => {
-            if (!buttonStatus) {
-            mediaRecorder.start();
-            console.log('Recording started');
-            buttonStatus = true;
-            button.innerHTML = 'Turn Off the Microphone';
-            status.innerText = 'Recording...';
-            } else {
-            mediaRecorder.stop();
-            console.log('Recording stopped');
-            buttonStatus = false;
-            button.innerHTML = 'Turn On the Microphone';
-            status.innerText = 'Recording stopped. Playing audio...';
-
-            }
-        });
-        sendQuery.addEventListener('click', async() => {
-            const formData = new FormData();
-            console.log(capturedImage.src);
-            formData.append('image', capturedImage.src);
-            formData.append('user_query',transcribed.innerText);
-            // fetch('/query', {
-            //     method: 'POST',
-            //     body: formData
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     transcribed.innerText = data.response;
-            //     console.log(data.response);
-            // })
-            // .catch(error => {
-            //     console.error('Error uploading image:', error);
-            //     status.innerText = 'Error uploading image.';
-            //     transcribed.innerText = '';
-            // });
-            const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/false-people', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    api_key: '5XagyPRtCr1rJQzvdDwl',
-                    inputs: {
-                        "image": {"type": "url", "value": capturedImage.src},
-                    }
-                })
-            });
-            const result = await response.json();
-            console.log(result);
-            const res = document.getElementsByClassName('response')[0];
-            const outputText = await result.outputs[0].llama_vision.output;
-            console.log(outputText);
-            res.innerHTML = `<p>${outputText}</p>`;
-
-        });
-    </script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,6 +6,7 @@
     <title>Voice & Vision Assistant</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* CSS remains unchanged */
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -632,6 +484,10 @@
                     <button class="camera-button">
                         <i class="fas fa-camera"></i> Take Picture
                     </button>
+                    <!-- Added front camera toggle button -->
+                    <button class="camera-button camera-switch">
+                        <i class="fas fa-sync-alt"></i> Switch Camera
+                    </button>
                 </div>
                 
                 <div class="camera-container">
@@ -680,6 +536,7 @@
         const transcriptionPlaceholder = document.querySelector('.transcription-placeholder');
         
         const cameraButton = document.querySelector('.camera-button');
+        const cameraSwitchButton = document.querySelector('.camera-switch'); // Added camera switch button reference
         const video = document.querySelector('.video');
         const canvas = document.querySelector('.canvas');
         const capturedImage = document.querySelector('.captured-image');
@@ -694,17 +551,59 @@
         let chunks = [];
         let hasCapturedImage = false;
         let hasTranscribedText = false;
+        let currentStream = null; // Added to track current video stream
+        let facingMode = "user"; // Added variable to track camera mode - "user" for front camera, "environment" for back camera
         
-        // Initialize Camera
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(error => {
-                console.error('Error accessing camera:', error);
-                statusText.innerText = 'Camera access denied';
-                statusText.style.color = 'var(--danger)';
-            });
+        // Initialize Camera with front-facing camera by default
+        // CHANGED: Modified to use front camera (user-facing) by default
+        function initializeCamera() {
+            // Stop any existing stream
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            
+            // Set camera constraints - "user" means front camera
+            const constraints = {
+                video: { 
+                    facingMode: facingMode,
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
+            };
+            
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(stream => {
+                    currentStream = stream; // Store reference to current stream
+                    video.srcObject = stream;
+                    
+                    // Display camera mode indicator
+                    statusText.innerText = facingMode === "user" ? 
+                        "Front camera active" : 
+                        "Back camera active";
+                })
+                .catch(error => {
+                    console.error('Error accessing camera:', error);
+                    statusText.innerText = 'Camera access denied';
+                    statusText.style.color = 'var(--danger)';
+                });
+        }
+        
+        // Call initialize camera with front-facing camera
+        initializeCamera();
+        
+        // Added camera switch functionality
+        cameraSwitchButton.addEventListener('click', () => {
+            // Toggle between front and back camera
+            facingMode = facingMode === "user" ? "environment" : "user";
+            
+            // Update button text to indicate what will happen on next click
+            cameraSwitchButton.innerHTML = facingMode === "user" ? 
+                '<i class="fas fa-sync-alt"></i> Switch to Back Camera' : 
+                '<i class="fas fa-sync-alt"></i> Switch to Front Camera';
+            
+            // Reinitialize camera with new facing mode
+            initializeCamera();
+        });
         
         // Initialize Microphone
         navigator.mediaDevices.getUserMedia({ audio: true })
@@ -805,11 +704,25 @@
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            
+            // CHANGED: For front camera (selfie mode), flip the image horizontally for natural mirror effect
+            if (facingMode === "user") {
+                context.translate(canvas.width, 0);
+                context.scale(-1, 1);
+            }
+            
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             
             // Convert to data URL and display
             const imageDataURL = canvas.toDataURL('image/png');
             capturedImage.src = imageDataURL;
+            
+            // CHANGED: For front camera, mirror the display of the captured image
+            if (facingMode === "user") {
+                capturedImage.style.transform = "scaleX(-1)";
+            } else {
+                capturedImage.style.transform = "none";
+            }
             
             // Show image after brief delay (simulating processing)
             setTimeout(() => {
@@ -896,22 +809,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
