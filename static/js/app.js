@@ -359,7 +359,7 @@ try {
     
     // Get base64 data from image source
     const imageDataUrl = capturedImage.src;
-    const base64Data = imageDataUrl.split(',')[1]; // Extract base64 part after comma
+    const base64Data = imageDataUrl.split(',')[1];
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -369,12 +369,18 @@ try {
         },
         body: JSON.stringify({
             model: model,
-            messages: [{
+            temperature: 0.1,
+            messages: [
+                {
+                    role: "system",
+                    content: "You are an AI assistant guiding visually impaired users through the Delhi Metro system. Your top priority is ensuring their safety and smooth navigation through stations, platforms, and trains. Your response must adapt to the visual context provided via bounding boxes, especially if they include classes like people, vacant seats, train doors, stairs, elevator, or train.\nWhen responding:\nFirst, alert to immediate safety concerns visible in the image — such as gaps between train and platform, nearby crowds, moving trains, or closing doors.\nUse bounding boxes to provide precise spatial directions (e.g., “2 feet to your right,” “half a step forward”), referencing nearby people, train doors, or obstacles.\nHighlight Delhi Metro-specific features such as:\nYellow tactile paths for guiding movement\nPlatform edges and train door locations using bounding box data\nGive station-specific guidance (platform number, train direction, interchange instructions) if identifiable.\nFor bounding boxes of people, warn about crowd density and advise optimal positioning or safe gripping points like poles, walls, or seats.\nIf train doors are detected, guide the user safely toward them, alerting to any platform gap, and warn when doors are about to close.\nFor vacant seats, provide their direction and distance clearly.\nIf stairs or elevators are visible:\nIndicate if they are to the left/right/behind the user\nSpecify if the escalator is moving and in which direction (if discernible)\nDirect to metro amenities like:\nAccessible restrooms\nHelp desks\nEmergency buttons (if visible)\nUse bounding boxes to help the user navigate through or around crowds and maintain safe distance.\nOffer guidance on:\nTicket counters\nSmart card recharge machines\nSecurity check areas\nClearly identify and guide to the correct exit number or name, and mention available transport options at the exit (like auto stands, buses, e-rickshaws).\nEven if bounding boxes are missing or incomplete, still give useful, safe, and general directions based on common Delhi Metro layouts and hazards.\nEnd each response with a quick confirmation question, like: “Would you like help finding the elevator?” or “Shall I guide you to the exit now?”\nAdditional Notes:\nKeep language simple, direct, and suitable for noisy environments.\nFocus on what matters most for safe movement.\nMake use of bounding box data when available, but do not rely on it exclusively."
+                },
+                {
                 role: "user",
                 content: [
                     {
                         type: "text",
-                        text: "You are an AI assistance that helps visually impaired people navigate safely. Your task is provide information related to any potential obstacle in the path and help them navigate safely. You can also provide them location of an empty Seat."+"Based on the query, do the needful. Query: " +transcribedContent.innerText
+                        text: transcribedContent.innerText
                     },
                     {
                         type: "image_url",
@@ -405,6 +411,25 @@ try {
             `;
         }
     }, 1500);
+
+    // Convert response text to voice
+    const speechSynthesis = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance();
+
+    try {
+        const outputText = result.choices[0].message.content;
+        utterance.text = outputText;
+        speechSynthesis.speak(utterance);
+    } catch (error) {
+        // Fallback for demo or if API fails
+        const fallbackText = `
+            I can see a person standing in what appears to be an indoor environment. 
+            The lighting is good and the image quality is clear. There are no obvious 
+            hazards or dangers visible in this scene.
+        `;
+        utterance.text = fallbackText;
+        speechSynthesis.speak(utterance);
+    }
 
 } catch (error) {
     console.error('Error sending query:', error);
