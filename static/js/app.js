@@ -15,6 +15,9 @@ const previewPlaceholder = document.querySelector('.preview-placeholder');
 
 const sendQueryButton = document.querySelector('.send-query');
 const responseContainer = document.querySelector('.response');
+const fewShot1 = document.querySelector('.fewshot1'); // Path to the image file
+const fewShot2 = document.querySelector('.fewshot2'); // Path to the image file
+const fewShot3 = document.querySelector('.fewshot3'); // Path to the image file
 
 // State
 let isRecording = false;
@@ -196,29 +199,17 @@ cameraButton.addEventListener('click', async () => {
             </div>
             <p>Processing image...</p>
         `;
-        previewPlaceholder.style.display = 'block';
+        previewPlaceholder.style.display = 'block'; 
         capturedImage.style.display = 'none';
 
-        // const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/detect-and-classify', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         api_key: '5XagyPRtCr1rJQzvdDwl',
-        //         inputs: {
-        //             "image": {"type": "url", "value": imageUrl}
-        //         }
-        //     })
-        // });
-
+        const roboflowApiKey = '5XagyPRtCr1rJQzvdDwl';
         const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/custom-workflow-2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                api_key: '5XagyPRtCr1rJQzvdDwl',
+                api_key: roboflowApiKey,
                 inputs: {
                     "image": {"type": "url", "value": imageUrl}
                 }
@@ -285,6 +276,7 @@ cameraButton.addEventListener('click', async () => {
             // } else {
             //     capturedImage.style.transform = "none";
             // }
+            capturedImage.style.transform = "none";
             updateSendButtonState();
         };
 
@@ -303,7 +295,7 @@ cameraButton.addEventListener('click', async () => {
         
         // Apply transform for front camera images
         // if (facingMode === "user") {
-        //     capturedImage.style.transform = "scaleY(-1)";
+        //     capturedImage.style.transform = "scaleX(-1)";
         // } else {
         //     capturedImage.style.transform = "none";
         // }
@@ -354,13 +346,60 @@ sendQueryButton.addEventListener('click', async() => {
     formData.append('user_query', transcribedContent.innerText);
 
 try {
-    const apiKey = "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";
-    const model = "meta-llama/llama-3.2-11b-vision-instruct";
+    // Load API key from .env file
+    const apiKey = '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';
+    const model = "meta-llama/llama-3.2-90b-vision-instruct";
+    // const model = "openai/gpt-4o";
     
     // Get base64 data from image source
     const imageDataUrl = capturedImage.src;
     const base64Data = imageDataUrl.split(',')[1];
 
+    // Convert the image to a base64 string
+    const loadImageAsBase64 = async (imagePath) => {
+        const res = await fetch(imagePath);
+        const blob = await res.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]); // Extract base64 part
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    const base64Image1 = await loadImageAsBase64(fewShot1.src);
+    const base64Image2 = await loadImageAsBase64(fewShot2.src);
+    const base64Image3 = await loadImageAsBase64(fewShot3.src);
+
+    const systemPrompt = `
+        You are a voice assistant for visually impaired Delhi Metro riders. Analyze the user's photo and query to provide safe, step-by-step navigation guidance. Follow these rules:
+
+        1. SAFETY FIRST:
+        - Immediately warn about dangers:
+            • "Warning:
+            • "Caution:
+
+        2. NAVIGATION GUIDANCE:
+        - Use detected objects (if available) for directions of vacant seats, elevator, ticket counter, etc.
+
+        3. DELHI METRO FEATURES:
+        - Mention specific features of the surrounding.
+
+        4. RESPONSE FORMAT:
+        - Keep responses short (1-2 sentences)
+        - Always start with safety warnings if any
+        - Use simple, directive language
+
+        5. PROHIBITED ACTIONS:
+        - Never say "look for" or mention colors
+        - Don't describe bounding boxes, only what's inside them
+        - If unsure: "Please ask metro staff."
+
+        6. WHEN NO INFORMATION:
+        - Give general safe advice:
+            • "Listen for station announcements to orient yourself"
+        Examples are given for your reference only. Do not mention them in your response or copy from them. Examples describe the structure of response only.
+        `;
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -369,29 +408,148 @@ try {
         },
         body: JSON.stringify({
             model: model,
-            temperature: 0.1,
+            temperature: 0.3,
+            frequency_penalty:0.8,
+            presence_penalty:0.5,
+            max_tokens:150,
             messages: [
                 {
                     role: "system",
-                    content: "You are an AI assistant guiding visually impaired users through the Delhi Metro system. Your top priority is ensuring their safety and smooth navigation through stations, platforms, and trains. Your response must adapt to the visual context provided via bounding boxes, especially if they include classes like people, vacant seats, train doors, stairs, elevator, or train.\nWhen responding:\nFirst, alert to immediate safety concerns visible in the image — such as gaps between train and platform, nearby crowds, moving trains, or closing doors.\nUse bounding boxes to provide precise spatial directions (e.g., “2 feet to your right,” “half a step forward”), referencing nearby people, train doors, or obstacles.\nHighlight Delhi Metro-specific features such as:\nYellow tactile paths for guiding movement\nPlatform edges and train door locations using bounding box data\nGive station-specific guidance (platform number, train direction, interchange instructions) if identifiable.\nFor bounding boxes of people, warn about crowd density and advise optimal positioning or safe gripping points like poles, walls, or seats.\nIf train doors are detected, guide the user safely toward them, alerting to any platform gap, and warn when doors are about to close.\nFor vacant seats, provide their direction and distance clearly.\nIf stairs or elevators are visible:\nIndicate if they are to the left/right/behind the user\nSpecify if the escalator is moving and in which direction (if discernible)\nDirect to metro amenities like:\nAccessible restrooms\nHelp desks\nEmergency buttons (if visible)\nUse bounding boxes to help the user navigate through or around crowds and maintain safe distance.\nOffer guidance on:\nTicket counters\nSmart card recharge machines\nSecurity check areas\nClearly identify and guide to the correct exit number or name, and mention available transport options at the exit (like auto stands, buses, e-rickshaws).\nEven if bounding boxes are missing or incomplete, still give useful, safe, and general directions based on common Delhi Metro layouts and hazards.\nEnd each response with a quick confirmation question, like: “Would you like help finding the elevator?” or “Shall I guide you to the exit now?”\nAdditional Notes:\nKeep language simple, direct, and suitable for noisy environments.\nFocus on what matters most for safe movement.\nMake use of bounding box data when available, but do not rely on it exclusively."
+                    content: systemPrompt
+                },
+                // Few-shot example 1: Obstacle detection
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Example Query 1: Help me find the nearest exit doors." },
+                        { 
+                            type: "image_url", 
+                            image_url: { url:`data:image/jpeg;base64,${base64Image1}` }
+                        }
+                    ]
                 },
                 {
-                role: "user",
-                content: [
-                    {
-                        type: "text",
-                        text: transcribedContent.innerText
-                    },
-                    {
-                        type: "image_url",
-                        image_url: {
-                            url: `data:image/jpeg;base64,${base64Data}`
+                    role: "assistant",
+                    content: `
+                            1. Safety Check:
+                            - No immediate hazards detected. You're safely inside the train.
+
+                            2. Navigation Guidance:
+                            - Nearest door is 10 steps ahead, slightly to your right (currently closed).
+                            - 2 vacant seats available:
+                            • One to your left (not recommended - has 'Do Not Sit' sign)
+                            • One across the aisle to your front-right near a passenger with suitcase
+
+                            3. Movement Instructions:
+                            To reach the door:
+                            • Walk straight 10 steps using the aisle handrail
+                            • Angle slightly right after 5 steps
+                            • Door will be directly ahead
+
+                            To reach the available seat:
+                            • Turn right and take 3 steps
+                            • Feel for the seat edge on your left
+
+                            4. Additional Notes:
+                            - Coach is moderately occupied (about 10 passengers)
+                            - Announcements will play before next station
+                            - Emergency intercom is near the door frame
+                            `
+                },
+                // Few-shot example 2: Clear path
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Example Query 2: Help me find a vacant seat." },
+                        { 
+                            type: "image_url", 
+                            image_url: { url: `data:image/jpeg;base64,${base64Image2}` } 
                         }
-                    }
-                ]
-            }]
-        })
-    });
+                    ]
+                },
+                {
+                    role: "assistant",
+                    content: `
+                        1. Safety Alert:
+                        - No immediate hazards detected
+                        - Be cautious of moving passengers in the crowded aisle
+
+                        2. Current Situation:
+                        - Train is moderately to heavily crowded
+                        - All visible seats are occupied
+                        - Standing passengers are holding overhead rails
+
+                        3. Recommended Actions:
+                        To find a seat:
+                        • Move forward 10 steps toward the next coach
+                        • Keep right along the aisle handrail
+                        • Pause between rows to check for vacated seats
+
+                        Alternative Options:
+                        • The left-side door area (2 steps left) has slightly more space
+                        • You may wait near the vertical pole ahead for stability
+
+                        4. Important Notes:
+                        - Next station arrival will be announced shortly
+                        - More seats may become available then
+                        - Priority seats are near the doors if vacated
+                        `
+                },
+                // Few-shot example 3: Finding seating
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Example Query 3: Should I enter? Are doors open?" },
+                        { 
+                            type: "image_url", 
+                            image_url: { url: `data:image/jpeg;base64,${base64Image3}` }
+                        }
+                    ]
+                },
+                {
+                    role: "assistant",
+                    content: `
+                        1. Safety Alert:
+                        - WARNING: Crowded doorway ahead
+                        - Doors are currently open but congested
+                        - Be ready to step back if chime sounds
+
+                        2. Current Situation:
+                        - 7 passengers at/near doorway
+                        - No one currently exiting
+                        - Train is stationary but may depart soon
+
+                        3. Recommended Actions:
+                        • Wait 5 seconds near door edge
+                        • If space opens:
+                        - Take 3 steps forward
+                        - Grab right-side pole immediately
+                        • If door chime sounds:
+                        - Move back 2 steps quickly
+                        - Wait for next train
+
+                        4. Alternative Options:
+                        • Next coach (20 steps left) may be less crowded
+                        • Station staff can assist if needed
+                        • Listen for "doors closing" announcement
+                        `
+                },
+                // Actual user query with current image
+                {
+                    role: "user",
+                    content: [
+                        { 
+                            type: "text", 
+                            text: transcribedContent.innerText 
+                        },
+                        { 
+                            type: "image_url", 
+                            image_url: { url: `data:image/jpeg;base64,${base64Data}`} 
+                        }
+                    ]
+                }
+            ]
+        })});
 
     // Process result
     const result = await response.json();
@@ -444,120 +602,3 @@ try {
     }, 1500);
 }
 });
-
-
-// // Function to make API call with few-shot examples
-// async function makeAssistanceAPICall(apiKey, model, imageBase64, userQuery) {
-//     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-//         method: 'POST',
-//         headers: {
-//             'Authorization': `Bearer ${apiKey}`,
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             model: model,
-//             messages: [
-//                 // First message: System instruction with few-shot examples
-//                 {
-//                     role: "system",
-//                     content: "You are an AI assistant that helps visually impaired people navigate safely. Your responses should be clear, concise, and focus on the most important safety information first. Describe obstacles, their location, and suggest safe paths. When identifying seating, be specific about location and availability."
-//                 },
-//                 // Few-shot example 1: Obstacle detection
-//                 {
-//                     role: "user",
-//                     content: [
-//                         { type: "text", text: "What's in front of me?" },
-//                         { 
-//                             type: "image_url", 
-//                             image_url: { url: "data:image/jpeg;base64,EXAMPLE_IMAGE_1" } 
-//                         }
-//                     ]
-//                 },
-//                 {
-//                     role: "assistant",
-//                     content: "CAUTION: There's a staircase about 5 feet ahead of you. The stairs go down. There's a handrail on the right side. For safety, I recommend approaching slowly and reaching out for the handrail first."
-//                 },
-//                 // Few-shot example 2: Clear path
-//                 {
-//                     role: "user",
-//                     content: [
-//                         { type: "text", text: "Is it safe to walk forward?" },
-//                         { 
-//                             type: "image_url", 
-//                             image_url: { url: "data:image/jpeg;base64,EXAMPLE_IMAGE_2" } 
-//                         }
-//                     ]
-//                 },
-//                 {
-//                     role: "assistant",
-//                     content: "Yes, the path ahead is clear for about 10 feet. There's a wide hallway with no obstacles. The floor is level and there are no trip hazards visible."
-//                 },
-//                 // Few-shot example 3: Finding seating
-//                 {
-//                     role: "user",
-//                     content: [
-//                         { type: "text", text: "Are there any empty seats nearby?" },
-//                         { 
-//                             type: "image_url", 
-//                             image_url: { url: "data:image/jpeg;base64,EXAMPLE_IMAGE_3" } 
-//                         }
-//                     ]
-//                 },
-//                 {
-//                     role: "assistant",
-//                     content: "Yes, there are two empty seats available. There's one empty chair about 3 feet to your right, and another empty bench straight ahead about 7 feet away against the wall."
-//                 },
-//                 // Few-shot example 4: Doorway identification
-//                 {
-//                     role: "user",
-//                     content: [
-//                         { type: "text", text: "Is there a door nearby?" },
-//                         { 
-//                             type: "image_url", 
-//                             image_url: { url: "data:image/jpeg;base64,EXAMPLE_IMAGE_4" } 
-//                         }
-//                     ]
-//                 },
-//                 {
-//                     role: "assistant",
-//                     content: "Yes, there's a door approximately 6 feet ahead of you. It's a standard width door that pulls open toward you. The door handle is on the right side. The door appears to be closed."
-//                 },
-//                 // Actual user query with current image
-//                 {
-//                     role: "user",
-//                     content: [
-//                         { 
-//                             type: "text", 
-//                             text: `You are an AI assistance that helps visually impaired people navigate safely. Your task is provide information related to any potential obstacle in the path and help them navigate safely. You can also provide them location of an empty Seat. Based on the query, do the needful. Query: ${userQuery}` 
-//                         },
-//                         { 
-//                             type: "image_url", 
-//                             image_url: { url: `data:image/jpeg;base64,${imageBase64}` } 
-//                         }
-//                     ]
-//                 }
-//             ]
-//         })
-//     });
-    
-//     const data = await response.json();
-//     return data;
-// }
-
-// // Example usage
-// async function getAssistanceForImage(imageBase64, userQuery) {
-//     const apiKey = "your_api_key_here";
-//     const model = "anthropic/claude-3-sonnet";  // or your preferred model
-    
-//     try {
-//         const result = await makeAssistanceAPICall(apiKey, model, imageBase64, userQuery);
-//         return result.choices[0].message.content;
-//     } catch (error) {
-//         console.error("Error calling assistance API:", error);
-//         return "Sorry, I encountered an error processing your request.";
-//     }
-// }
-
-// // This function would be called with the base64 image data and user query
-// // const response = await getAssistanceForImage(base64Data, "What's in front of me?");
-// // console.log(response);

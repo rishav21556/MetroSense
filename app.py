@@ -176,7 +176,7 @@ def process_with_vision_model(img_path,inside, Class):
     )
 
 
-    return result[0]['llama_vision']['output']
+    return result[0]['llama_vision']['output']  
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
