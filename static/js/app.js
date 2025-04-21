@@ -394,10 +394,7 @@ try {
         - Never say "look for" or mention colors
         - Don't describe bounding boxes, only what's inside them
         - If unsure: "Please ask metro staff."
-
-        6. WHEN NO INFORMATION:
-        - Give general safe advice:
-            • "Listen for station announcements to orient yourself"
+        
         Examples are given for your reference only. Do not mention them in your response or copy from them. Examples describe the structure of response only.
         `;
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -451,7 +448,6 @@ try {
                             • Feel for the seat edge on your left
 
                             4. Additional Notes:
-                            - Coach is moderately occupied (about 10 passengers)
                             - Announcements will play before next station
                             - Emergency intercom is near the door frame
                             `
@@ -490,8 +486,6 @@ try {
                         • You may wait near the vertical pole ahead for stability
 
                         4. Important Notes:
-                        - Next station arrival will be announced shortly
-                        - More seats may become available then
                         - Priority seats are near the doors if vacated
                         `
                 },
@@ -529,8 +523,6 @@ try {
                         - Wait for next train
 
                         4. Alternative Options:
-                        • Next coach (20 steps left) may be less crowded
-                        • Station staff can assist if needed
                         • Listen for "doors closing" announcement
                         `
                 },
