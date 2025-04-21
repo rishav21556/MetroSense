@@ -347,7 +347,7 @@ sendQueryButton.addEventListener('click', async() => {
 
 try {
     // Load API key from .env file
-    const apiKey = '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';
+    const apiKey = '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';
     const model = "meta-llama/llama-3.2-90b-vision-instruct";
     // const model = "openai/gpt-4o";
     
@@ -406,8 +406,8 @@ try {
         body: JSON.stringify({
             model: model,
             temperature: 0.3,
-            frequency_penalty:0.8,
-            presence_penalty:0.5,
+            frequency_penalty:1.0,
+            presence_penalty:0.9,
             max_tokens:150,
             messages: [
                 {
