@@ -359,7 +359,7 @@ sendQueryButton.addEventListener('click', async() => {
 
 try {
     // Load API key from .env file
-    const apiKey = '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';
+    const apiKey = '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';
     const model = "meta-llama/llama-3.2-90b-vision-instruct";
     // const model = "openai/gpt-4o";
     
