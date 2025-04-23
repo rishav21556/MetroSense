@@ -1,0 +1,461 @@
+ID,Query,Description
+bounded_5,Help me find a vacant seat.,"**1. Immediate Safety Alert**  
+No immediate hazards detected. You are standing safely inside the train, likely holding onto a handrail.
+
+---
+
+**2. Scene Overview**  
+You're inside a metro train coach. The train is moderately to heavily crowded, especially near the doors. Most seats are occupied, with standing passengers holding overhead handrails and poles.
+
+---
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 11 detected –  
+  - Several standing near doors and holding overhead bars  
+  - A few seated to your right and left, mostly women  
+  - Clustered crowd around both train doors
+  
+- **Train doors**: 3 detected –  
+  - Left side door about 2 feet to your left – **Status: closed**  
+  - Two more ahead and to the right – **Status: closed**
+  
+- **Vacant seats**: 0 clearly visible –  
+  - All labeled seats appear occupied  
+  - No open or marked vacant seats detected in the current view
+
+---
+
+**4. Navigation Guidance**  
+There are no clearly available vacant seats visible in this coach section. To increase your chances of finding one:  
+- Move **forward about 10 feet** toward the next coach section  
+- Stay **to the right side** of the aisle to avoid oncoming passengers  
+- Pause near each row to scan for newly vacated seats
+
+Would you like me to help you find the nearest door instead or suggest a standing spot with better balance support?"
+bounded_6,Should I enter? Are doors open?,"**1. Immediate Safety Alert**  
+**CAUTION:** Train doors are currently **open** directly in front of you. Multiple passengers are standing at the entrance — proceed only if space is sufficient and safe.
+
+---
+
+**2. Scene Overview**  
+You're at a metro station platform facing a **stationary train** with **open doors**. The coach is **very crowded** near the entrance, with passengers standing and some appearing ready to exit.
+
+---
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 7 detected –  
+  - 3 women standing directly at the doorway  
+  - 4 more inside the coach holding onto vertical poles and handles  
+  - No visible movement indicating anyone is stepping out immediately  
+  
+- **Train doors**: 1 detected –  
+  - Directly in front of you, fully open  
+  
+- **Train**: Side of the train visible – **Status: stationary**
+
+---
+
+**4. Navigation Guidance**  
+It is **not recommended to enter right now** due to the congestion at the doorway.  
+- Wait a few seconds to check if any passengers are exiting  
+- If space opens up, step **forward about 3 steps** to enter and hold the vertical pole to your right  
+- If the door chimes or lights begin flashing, **step back immediately** to avoid getting caught in closing doors
+
+Let me know if you want help timing your entry or locating another door."
+bounded_8,Help me find a vacant seat,"**1. Immediate Safety Alert**  
+No urgent hazards visible. You are safely inside a metro coach.
+
+---
+
+**2. Scene Overview**  
+You're in a metro train interior. The environment is calm and **lightly crowded**, with several seated passengers and one clearly vacant seat near the end of a bench.
+
+---
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 3 detected –  
+  - All seated in a row to your left side  
+  - Each person is spaced out along the bench  
+  
+- **Train doors**: 2 detected –  
+  - One to your immediate left and another slightly ahead – **Status: closed**
+  
+- **Vacant seats**: 1 detected –  
+  - Located at the **far end of the bench**, about **2 seats to your right**  
+  - Clearly marked and unoccupied
+
+---
+
+**4. Navigation Guidance**  
+To reach the vacant seat:  
+- **Turn 45 degrees to your right**  
+- Take **2 small side-steps along the row**  
+- As you pass the seated passengers, feel for the seat edge at the end  
+- Once aligned, **turn and sit gently**; there’s a wall or panel likely behind that seat to guide your orientation
+
+Let me know if you need help identifying a priority seat or the nearest exit next."
+bounded_9,I want to exit the train on next station.,"**1. Immediate Safety Alert**  
+No immediate hazards. You are seated safely inside the train.
+
+---
+
+**2. Scene Overview**  
+You're inside a metro coach, seated on a bench. The train appears to be **in motion** or **stationary at a platform**, and the **exit door is visible ahead on your right**. The coach is **lightly occupied**, with three seated passengers nearby.
+
+---
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 4 detected –  
+  - All seated along the bench to your left and right side  
+
+- **Train door**: 1 detected –  
+  - Located about **6 to 8 feet directly ahead** on your right side  
+  - **Status: closed**
+
+- **Vacant Seats**: 3 detected –  
+  - Marked with “Do Not Sit Here” signs (likely social distancing seats)
+
+- **Sign**: “Do Not Sit Here” notice located between passengers  
+
+---
+
+**4. Navigation Guidance**  
+To prepare for exit at the next station:  
+1. **Remain seated for now** until the train slows or stops  
+2. When the train stops and the door chime sounds:  
+   - **Stand up carefully**, turning 90 degrees to your **right**  
+   - Walk about **3 to 4 steps straight ahead** toward the door  
+   - Feel for the **vertical pole or door edge** on your right side as a guide  
+3. Wait for the door to fully open and listen for platform noise or announcements before stepping out safely
+
+Let me know if you’d like help timing the exit or switching lines!"
+bounded_10,what is in front of me?,"**1. Immediate Safety Alert**  
+No immediate hazards detected in front of you. You are seated securely inside a Delhi Metro coach.
+
+---
+
+**2. Scene Overview**  
+You are in the **interior of a metro train**. The coach is **lightly occupied**, and the environment appears **calm and well-lit**. You are facing a row of seats on the opposite side.
+
+---
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 2 detected –  
+  - One seated diagonally to your **front-left** (approx. 6 feet away)  
+  - One seated to your **front-right** (approx. 7 feet away), wearing a saree and mask  
+
+- **Vacant Seats**: 4 detected –  
+  - All directly **in front of you** across the aisle  
+  - Marked with **“Do Not Sit Here” signs**, indicating social distancing seats  
+
+- **Sign**: Present on the seat backs across from you — “Do Not Sit Here” indicators  
+
+---
+
+**4. Navigation Guidance**  
+What’s directly in front of you:  
+- A **row of 4 seats**, facing you at about **4 to 5 feet distance**  
+- **All of them are vacant**, but **not available for sitting** (social distancing signs)  
+- If you're looking for a usable seat or exit guidance, let me know and I’ll assist accordingly."
+bounded_13,Help me find a vacant seat.,"Immediate Safety Alert
+CAUTION: Multiple vertical support poles are directly in front of you. There are also passengers standing nearby.
+Scene Overview
+You're inside a moderately occupied metro train car. The interior is clean with white walls, ceiling, and metal handrails. There's a blue strip on the floor marking pathway areas. The train appears to be in motion.
+Detected Objects
+People: Approximately 15 passengers detected - seated on both sides of the aisle, some standing holding handrails.
+Train doors: 3 doors visible - marked with green ""traindoor"" labels - currently closed.
+Vacant seats: 1 detected - approximately 8 feet ahead on your left side - standard orange seat.
+Support poles: Multiple vertical and horizontal handrails throughout the car - closest pole is directly in front of you.
+Route map: Visible on the upper left wall of the train car.
+Navigation Guidance
+To reach the vacant seat:
+
+
+Carefully step forward 2 feet while keeping your right hand extended to feel the vertical support pole.
+Turn slightly left and proceed 6 more feet forward along the center aisle.
+The vacant orange seat will be on your left side.
+Before sitting, you may want to announce your presence as there are other passengers seated in the same row.
+Extend your left hand downward to feel the edge of the seat before sitting."
+bounded_14,Help me exit by finding the door.,"Immediate Safety Alert CAUTION: Center aisle is clear but there are vertical poles approximately 3 feet ahead of you. Train doors are closed at this time.
+Scene Overview You're inside a sparsely occupied metro train car. The interior has a white/gray color scheme with a light-colored floor. The train appears to be in motion with passengers seated on both sides of the central aisle.
+Detected Objects Train doors: 3 doors visible - one approximately 10 feet ahead on your right, one 10 feet ahead on your left, and one 5 feet behind on your left (all marked with green ""traindoor"" labels) - all currently closed. People: 4 detected - two passengers seated 8 feet ahead on your right, two passengers seated 8 feet ahead on your left. Vacant seats: Multiple vacant seats visible - 6 feet to your left and 6 feet to your right. Support poles: Vertical poles located throughout the car - nearest one is 3 feet directly ahead.
+Navigation Guidance To reach the nearest door:
+Walk forward approximately 5 feet, keeping your hand extended to detect the vertical support pole.
+After passing the pole, turn approximately 45 degrees to your right.
+Proceed another 5 feet to reach the train door on your right side.
+Once at the door, you can feel for the vertical door frame and wait there until the train stops and the doors open.
+Alternatively, you could turn left after the pole to reach the door on the left side at a similar distance.
+
+"
+bounded_15,Alert me by giving an overview of this coach.,"Immediate Safety Alert
+CAUTION: Train door is approximately 8 feet ahead on your left. Clear aisle with multiple vertical poles throughout the coach.
+Scene Overview
+You're inside a metro train coach that is moderately occupied. The interior has a bright, clean appearance with white/cream colored walls and ceiling. There are overhead handles (brown straps) running along both sides of the coach. The floor is light-colored.
+Detected Objects
+Train doors: 1 visible door - approximately 8 feet ahead on your left side (marked with green ""traindoor"" label) - currently closed.
+People: 5-6 passengers detected - mostly seated approximately 10-15 feet ahead on the right side of the coach.
+Vacant seats: Multiple vacant seats visible - approximately 10-15 feet ahead on both sides.
+Support poles: Multiple vertical poles throughout the coach - nearest pole is about 3 feet in front of you.
+Sign: Number ""6"" sign visible on the left wall, approximately 6 feet ahead - possibly indicating coach number or route information.
+Emergency exit sign: Green exit sign visible above the door on your left.
+Hanging straps: Multiple brown hanging hand straps run along the ceiling on both sides of the aisle.
+Navigation Guidance
+The coach is relatively spacious with a clear path down the center aisle. To safely navigate:
+
+
+Proceed straight ahead, using the vertical poles for support (approximately one pole every 5 feet).
+The nearest door is 8 feet ahead on your left.
+For seating, continue forward approximately 10-12 feet where multiple vacant seats are available on both sides.
+Be aware that there are some passengers seated in the forward section of the coach."
+bounded_16,Find a vacant seat.,"Immediate Safety Alert
+CAUTION: Standing passengers near you, and vertical support poles throughout the coach.
+Scene Overview
+You're in a partially occupied metro train car. The interior has bright lighting with white walls and ceiling. There's a mix of seated and standing passengers, with multiple vacant seats available.
+Detected Objects
+People: 4 detected - one person standing approximately 3 feet to your left, one person seated 5 feet ahead on your right, two people standing 8-10 feet ahead.
+Train door: 1 visible - marked with green ""traindoor"" label - approximately 12 feet ahead on the right side - currently closed.
+Vacant seats: 2 detected - one 5 feet ahead on your left (marked in red as ""VacantSeats""), another 8 feet ahead also on your left side (also marked as ""VacantSeats"").
+Support poles: Multiple vertical and horizontal handrails throughout the car - nearest pole is approximately 2 feet ahead.
+Navigation Guidance
+To reach the nearest vacant seat:
+
+
+Take 3 steps forward while keeping your right hand extended to feel for support poles.
+Turn 90 degrees to your left.
+Take 1 step forward toward the vacant seat on your left.
+Extend your left hand downward to feel the edge of the seat before sitting.
+If you prefer more distance from other passengers, continue 3 more steps forward to reach the second vacant seat on the left side."
+bounded_17,What is happening?,"1. Immediate Safety Alert
+CAUTION: Multiple vertical support poles in the aisle. Clear pathway ahead with light passenger traffic.
+
+2. Scene Overview
+You're inside a metro train car that is lightly occupied. The interior has white/cream colored walls and a light gray floor. The train appears to be in motion. There are hanging straps visible along the ceiling and vertical poles throughout the coach. 
+
+3. Detected Objects
+People: 4-5 passengers detected - seated approximately 10-15 feet ahead on both sides of the aisle - one person in white shirt is looking at their phone.
+Support poles: Multiple vertical poles throughout the car - nearest one is approximately 3 feet ahead of you.
+Floor markings: Small green circular markers visible on the floor, possibly social distancing indicators.
+Luggage: A brown bag or suitcase visible in the immediate foreground, appears to be next to you.
+Hanging straps: Brown hanging hand straps run along the ceiling rails.
+Seats: Several seats visible along both sides of the train car - some occupied, some appear vacant.
+
+4. Navigation Guidance
+The train is currently in normal operation with a few passengers seated throughout the car. There's a clear central aisle ahead of you with support poles approximately every 5-6 feet. If you need to move forward, proceed with caution using the poles for support. There appears to be a bag or luggage item near you that you should be mindful of when moving."
+bounded_18,How crowded is this coach?,"1. Immediate Safety Alert
+CAUTION: Crowded train car with limited standing room. Multiple passengers and vertical poles in the central aisle.
+
+2. Scene Overview
+You're inside a heavily occupied metro train car. The interior has white walls with brown hanging straps above and multiple vertical support poles throughout. The train appears to be in motion. All seats appear to be taken and several people are standing.
+
+3. Detected Objects
+People: Approximately 15-20 detected - seated passengers on both sides of the aisle, 4-5 people standing in the center aisle approximately 5-10 feet ahead of you.
+Train door: 1 visible - marked with green ""traindoor"" label - approximately 10 feet ahead on the right side - currently closed.
+Support poles: Multiple vertical poles throughout the car - nearest one is approximately 2 feet ahead.
+Hanging straps: Brown hanging hand grips run along the ceiling rails on both sides.
+Shopping bag: One passenger approximately 10 feet ahead has a shopping bag on the floor.
+
+4. Navigation Guidance
+The coach is very crowded with all seats occupied and multiple people standing. If you need to move through:
+- Proceed with extreme caution, keeping your hand extended to feel for people and poles.
+- Announce your presence: ""Excuse me, visually impaired person coming through"" may help others make way.
+- Use the vertical poles for support, moving from one to the next approximately every 3-4 feet.
+- Be aware that sudden train movements may cause standing passengers to shift position."
+bounded_19,Where are the train doors?,"1. **Immediate Safety Alert**  
+No immediate safety concerns visible. Floor is clear, no obstructions or open doors nearby.
+
+2. **Scene Overview**  
+You're inside a metro train. The environment is moderately crowded with seated and standing passengers. Some people are standing near the poles; overall movement appears minimal.
+
+3. **Detected Objects (Based on Bounding Boxes)**  
+- **People**: Approximately 18 detected – 4 seated to your left within 2 feet, 6 seated to your right within 3 feet, and about 8 further ahead, including 2 standing near the center aisle around 10 feet in front.  
+- **Train doors**: 1 detected – Located directly to your left, about 2 feet away, **currently closed**.  
+- **Train**: Interior visible – you are **onboard and the train is stationary or in motion**, not at a platform based on the image view.  
+- **Stairs**: Not visible.  
+- **Elevator**: Not visible.  
+- **Vacant seats**: 0 detected – All visible seats are currently occupied.
+
+4. **Navigation Guidance**  
+The nearest train door is to your immediate left. To approach it:  
+- Turn left  
+- Take 2 steps forward  
+- You will reach the door panel – ensure it's not in operation before touching.  
+Note: Wait for audible door alerts or announcements before preparing to exit."
+bounded_21,Find 2 vacant seats,"1. **Immediate Safety Alert**  
+No immediate safety hazards visible. The aisle is clear, and all passengers are seated.
+
+2. **Scene Overview**  
+You are inside a metro train. The coach is **sparsely populated** with plenty of space to move around. The atmosphere is calm with only a few seated passengers.
+
+3. **Detected Objects (Based on Bounding Boxes)**  
+- **People**: 3 detected – One man seated on the left side about 4 feet ahead, another man seated on the right side about 7 feet ahead, one more visible further down the coach.
+- **Train doors**: 1 detected – Approximately 6 feet directly ahead, **status: closed**.
+- **Train**: Interior view – you are onboard and the train appears **stationary or in motion**, no platform visible.
+- **Stairs**: Not visible.  
+- **Elevator**: Not visible.  
+- **Vacant seats**: 2 detected –  
+  - First: About 5 feet ahead on your **right side**, **standard seat** next to a seated man.  
+  - Second: Around 4 feet ahead on your **left side**, **standard seat** next to another seated passenger.
+
+4. **Navigation Guidance**  
+To reach the **first vacant seat on the right**:  
+- Walk 5 steps forward  
+- Turn slightly right  
+- Extend your hand to locate the seat next to the man in a blue shirt.
+
+To reach the **second vacant seat on the left**:  
+- Walk 4 steps forward  
+- Turn slightly left  
+- The seat will be next to the man in a white shirt and dark pants."
+bounded_22,Is the coach empty?,"1. **Immediate Safety Alert**  
+No immediate hazards detected. The floor is clear, and there is ample space for movement.
+
+2. **Scene Overview**  
+You are inside a metro train coach. The coach is **mostly empty**, with only **two seated passengers** visible — one on the left and one on the right. The atmosphere is quiet and spacious.
+
+3. **Detected Objects (Based on Bounding Boxes)**  
+- **People**: 2 detected  
+  - One person seated on the **left side**, approximately 10 feet ahead  
+  - One person seated on the **right side**, approximately 12 feet ahead  
+- **Train doors**: 2 detected  
+  - One on the **left**, about 6 feet ahead — **closed**  
+  - One on the **right**, about 8 feet ahead — **closed**  
+- **Train**: Interior view – you are **onboard**, and the train appears to be **in motion or idle**, no platform is visible.  
+- **Stairs**: Not visible  
+- **Elevator**: Not visible  
+- **Vacant seats**: 10+ detected – evenly distributed on both sides of the aisle, mostly standard seats.
+
+4. **Navigation Guidance**  
+You may choose any side for seating.
+
+To reach the **nearest vacant seat on your left**:  
+- Walk 3 steps forward  
+- Turn slightly left  
+- The seat is directly beside the wall and under the window
+
+To reach the **nearest vacant seat on your right**:  
+- Walk 4 steps forward  
+- Turn slightly right  
+- Reach out to feel for the seat edge next to the window
+
+✅ **Yes, the coach is mostly empty with plenty of available seats**."
+bounded_23,What are people doing in this coach?,"1. **Immediate Safety Alert**  
+No immediate hazards present. The floor is clear and all passengers are seated with belongings in manageable positions.
+
+2. **Scene Overview**  
+You're in a **lightly crowded metro coach**. There are a few passengers seated on both sides, and the rest of the seats are unoccupied. The atmosphere is calm and orderly.
+
+3. **Detected Objects (Based on Bounding Boxes)**  
+- **People**: 5 detected  
+  - 1 woman seated to your **left**, about 2 feet away, looking at her phone  
+  - 1 man seated to your **right**, about 2 feet away, resting with head down and hands folded, possibly asleep or checking phone  
+  - 3 more people visible **further down the coach**, seated and engaged in personal activities  
+- **Train doors**: 1 detected – Directly ahead, around 6 feet away – **closed**  
+- **Train**: Interior view – you are **onboard**, train is **stationary or in motion**  
+- **Stairs / Elevator**: Not visible  
+- **Vacant seats**: 10+ detected – scattered on both sides, mostly **standard seating**
+
+4. **Navigation Guidance**  
+To reach a vacant seat on the **left**:
+- Take 2 steps forward  
+- Turn left slightly  
+- Reach forward; seat is beside the woman with a pink bag
+
+To reach a vacant seat on the **right**:
+- Take 3 steps forward  
+- Turn right slightly  
+- Feel for an empty seat next to the man in black and red jacket
+
+🧍‍♂️ **Summary of what people are doing**:  
+- Two passengers (1 man, 1 woman) near you are seated and using or holding their phones  
+- Other passengers further down the coach appear to be quietly seated, possibly engaged in similar solitary activities (like resting or using phones)"
+bounded_24,Help me reach train doors.,"1. **Immediate Safety Alert**  
+⚠️ No urgent hazards detected. However, **people are seated close to the aisle**, so maintain spatial awareness as you move forward.
+
+2. **Scene Overview**  
+You are inside a **moderately crowded metro coach**. Several passengers are seated on both sides, with a few **vacant seats** in between. There's a **clear aisle** ahead for navigation.
+
+3. **Detected Objects (Based on Bounding Boxes)**  
+- **People**: 10+ detected – Most seated along both sides of the coach, about 1–6 feet away.  
+- **Train doors**: 1 detected – At the **far end of the coach**, approximately **15–18 feet straight ahead** – **Status: closed**  
+- **Train**: Interior view – You are onboard and the train is **in motion or idle**  
+- **Stairs / Elevator**: Not visible  
+- **Vacant seats**: 3+ detected – Between passengers on both left and right sides.
+
+4. **Navigation Guidance**  
+To reach the **train doors**:  
+- Walk **12 to 15 steps** **straight ahead** along the aisle  
+- Stay **centered** to avoid contact with seated passengers  
+- As you approach the end of the aisle, you’ll feel a **horizontal gap** in the wall surface — this is the **train door area**  
+- You can then **extend your hand** to locate the door edge or the vertical pole near it
+
+Let me know if you'd like guidance to a seat or door controls once you're there."
+bounded_25,Find a vacant seat for me,"**1. Immediate Safety Alert**  
+No urgent hazards visible. No open or closing train doors near your current position.
+
+
+**2. Scene Overview**  
+You're inside a **moderately crowded metro coach**. Most passengers are seated. There is **one visible train door** on the right side, halfway down the coach. Natural daylight suggests the train may be at a station or above ground.
+
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **People**: 10 detected  
+  - Closest: 2 people seated immediately to your left  
+  - Others: 6 people seated on the right side benches, 2 more further ahead on the left  
+- **Train Doors**: 1 detected – 15 feet ahead on the **right side** – **Status: closed**  
+- **Train**: Interior visible – **Status: stationary or moving slowly**  
+- **Vacant Seats**: 1 detected – 15 feet ahead on the **right side**, next to the person in a blue shirt – **Type: standard**
+
+
+**4. Navigation Guidance**  
+To reach the vacant seat:  
+1. Walk forward **about 12 to 15 steps** along the aisle.  
+2. When you feel the vertical pole (near the train door), **turn slightly right**.  
+3. Extend your hand to locate the edge of the bench.  
+4. The **vacant seat is next to a seated person in a blue shirt**, closest to the window.
+
+Let me know if you'd like guidance to the door or assistance with seat types (priority vs. regular)."
+bounded_26,Is the door open?,"**1. Immediate Safety Alert**  
+✅ **Yes, the train door is open.** A person is stepping through it, and the platform outside is visible. Exercise caution if you're standing or moving nearby.
+
+**2. Scene Overview**  
+You are inside a metro coach near the **open train door**. A person is exiting, and several others are seated on the bench opposite the door. One **vacant seat** is visible between seated passengers.
+
+**3. Detected Objects (Based on Bounding Boxes)**  
+- **Train Door**: 1 – **Open**, located on your **right side**, near the middle of the coach  
+- **People**: 6  
+  - 2 near the door (one walking out)  
+  - 3 seated on the right bench  
+  - 1 sitting on the left bench  
+- **Vacant Seat**: 1 – on the **right side**, beside seated passengers  
+- **Train**: Stationary, with door open to the platform  
+
+**4. Navigation Guidance**  
+If you're trying to **exit the train**:  
+1. From your current position, move toward the **right side of the coach**.  
+2. Locate the **open door ahead**, just past the vertical pole.  
+3. Step carefully over the threshold onto the platform.  
+
+Let me know if you need help getting to the **vacant seat** instead!"
+bounded_28,Where are vacant seats?,"**1. Vacant Seat Locations Identified** ✅  
+There are **4 vacant seats** visible in this coach:
+
+- 🟥 **Near train door (left side)** – 2 vacant seats beside a person reading a newspaper  
+- 🟥 **Middle-right row** – 1 vacant seat beside a woman in yellow attire  
+- 🟥 **Far-right corner** – 1 vacant seat at the very end of the bench  
+
+**2. Scene Summary**  
+You're **inside a metro coach** that's currently **stopped at a station** (sign indicates ""HUDA City Centre""). The train doors are open. A **security guard is standing on the platform**. Inside the coach, most seats are occupied, but there are **a few visible vacancies** on both sides.
+
+**3. Object Breakdown**  
+- 🟩 **Train Doors**: Open, on both left and right ends  
+- 🟧 **People**: 9 seated, 1 standing inside, 1 security outside  
+- 🟥 **Vacant Seats**: 4 total, labeled in red boxes  
+- 🟪 **Signs**: Platform safety indicators marked in purple  
+
+**4. Guidance to Reach a Vacant Seat**  
+If you just entered the train:
+- 👉 **Left side**: Two seats are directly next to the door (one row in).  
+- 👉 **Right side, mid-coach**: One vacant seat beside the woman in yellow.  
+- 👉 **Far-right end**: A seat at the very end of the bench.
+
+Let me know if you want directions based on your position or nearest seat!"
