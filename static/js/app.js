@@ -203,19 +203,7 @@ cameraButton.addEventListener('click', async () => {
         capturedImage.style.display = 'none';
 
         const roboflowApiKey = '5XagyPRtCr1rJQzvdDwl';
-        // const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/custom-workflow-2', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         api_key: roboflowApiKey,
-        //         inputs: {
-        //             "image": {"type": "url", "value": imageUrl}
-        //         }
-        //     })
-        // });
-        const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/custom-workflow-4', {
+        const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/custom-workflow-2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -227,6 +215,18 @@ cameraButton.addEventListener('click', async () => {
                 }
             })
         });
+        // const response = await fetch('https://serverless.roboflow.com/infer/workflows/rishav-qz1u7/custom-workflow-4', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         api_key: roboflowApiKey,
+        //         inputs: {
+        //             "image": {"type": "url", "value": imageUrl}
+        //         }
+        //     })
+        // });
 
         console.log(response);
         const result = await response.json();
