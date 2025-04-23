@@ -2,7 +2,7 @@
 
 ## Overview
 
-MetroSense is a web-based personal travel assistant designed to enhance the commute experience for visually impaired persons (VIPs) within the Delhi Metro. [cite: 3, 4] The application integrates voice-enabled queries and real-time image capture from a smartphone to provide users with contextual guidance. [cite: 4, 5] It uses a fine-tuned YOLOv1l model for object detection and the LLAMA Vision 3.2 model for Visual Question Answering (VQA).
+MetroSense is a web-based personal travel assistant designed to enhance the commute experience for visually impaired persons (VIPs) within the Delhi Metro. The application integrates voice-enabled queries and real-time image capture from a smartphone to provide users with contextual guidance. It uses a fine-tuned YOLOv1l model for object detection and the LLAMA Vision 3.2 model for Visual Question Answering (VQA).
 
 ## Features
 
