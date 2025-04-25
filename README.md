@@ -42,3 +42,9 @@ MetroSense is a web-based personal travel assistant designed to enhance the comm
 * Optimize the UI for better accessibility.
 * Integrate safety features like obstacle avoidance and fall detection.
 * Expand functionality to include multi-language support and offline capabilities.
+
+## Group Members
+* Rishav Raj
+* Tanmay Singh
+* Garv Makkar
+* Vaibhav Tanwar
