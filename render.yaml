@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: voice-vision-assistant
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-level info
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: ROBOFLOW_API_KEY
+        value: 5XagyPRtCr1rJQzvdDwl
+    autoDeploy: true
+    disk:
+      name: voice-vision-data
+      mountPath: /var/data
+      sizeGB: 1

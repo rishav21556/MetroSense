@@ -49,6 +49,13 @@ captured_image.png
 instance/
 .webassets-cache
 
+# Deployment
+.render/
+render-build.sh
+
+# Git
+.git/
+
 # Testing
 .coverage
 htmlcov/

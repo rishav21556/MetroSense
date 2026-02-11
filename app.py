@@ -19,13 +19,26 @@ app.config['MAX_CONTENT_LENGTH'] = 256 * 1024 * 1024 * 1024  # 256MB limit
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY", "5XagyPRtCr1rJQzvdDwl")
 
-if not OPENROUTER_API_KEY:
-    raise ValueError("OPENROUTER_API_KEY is not set. Please check your .env file.")
+# Check for required API keys (only fail in production, not during build)
+if not OPENROUTER_API_KEY and os.getenv("RENDER"):
+    print("WARNING: OPENROUTER_API_KEY is not set. Please configure it in Render dashboard.")
+elif not OPENROUTER_API_KEY:
+    print("WARNING: OPENROUTER_API_KEY is not set. Please check your .env file.")
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/health')
+def health():
+    """Health check endpoint for monitoring"""
+    return jsonify({
+        "status": "healthy",
+        "service": "voice-vision-assistant",
+        "version": "1.0.0"
+    }), 200
 
 
 def write(filename, data):

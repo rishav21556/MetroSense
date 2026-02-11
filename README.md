@@ -38,15 +38,14 @@ An AI-powered web application designed specifically for visually impaired indivi
 Create a `.env` file in the root directory:
 
 ```bash
-# OpenAI API Key for speech recognition
-OPENAI_API_KEY=your_openai_api_key_here
-
-# OpenRouter API Key for vision model
+# OpenRouter API Key for vision model (REQUIRED)
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-# Roboflow API Key (optional - uses default if not provided)
-ROBOFLOW_API_KEY=your_roboflow_api_key_here
+# Roboflow API Key (OPTIONAL - default value works fine)
+ROBOFLOW_API_KEY=5XagyPRtCr1rJQzvdDwl
 ```
+
+**Note**: Speech recognition uses Google's FREE service (no API key needed)!
 
 ### 2. Install Dependencies
 
@@ -84,15 +83,44 @@ your-project/
 
 ### 4. Run the Application
 
+**Development:**
 ```bash
-# Development
 python app.py
+```
 
-# Production (recommended)
-gunicorn --bind 0.0.0.0:5000 app:app
+**Production:**
+```bash
+gunicorn app:app --bind 0.0.0.0:5000 --workers 2 --timeout 120
 ```
 
 The application will be available at `http://localhost:5000`
+
+## 🌐 Deployment
+
+### Deploy to Render (Recommended)
+
+This project is configured for one-click deployment to Render:
+
+1. **Quick Deploy**: See [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) for detailed instructions
+2. **Free Tier**: Deploy on Render's free tier with auto-scaling
+3. **System Dependencies**: Automatically installs ffmpeg and OpenCV dependencies
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+**Key Files for Deployment:**
+- `render.yaml` - Render Blueprint configuration
+- `Procfile` - Process file for gunicorn
+- `Aptfile` - System dependencies (ffmpeg, opencv libs)
+- `runtime.txt` - Python version specification
+
+### Other Deployment Options
+
+- **Railway**: Similar to Render, use `Procfile`
+- **Fly.io**: Create `fly.toml` configuration
+- **DigitalOcean**: Use App Platform with buildpack
+- **VPS**: Use nginx + gunicorn + systemd
+
+See [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) for complete deployment guide.
 
 ## 🔒 Security Features
 
