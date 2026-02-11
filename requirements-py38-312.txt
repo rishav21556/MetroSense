@@ -1,0 +1,9 @@
+Flask==3.0.0
+python-dotenv==1.0.0
+pydub==0.25.1
+SpeechRecognition==3.10.0
+opencv-python==4.8.1.78
+numpy==1.24.3
+inference-sdk==0.9.0
+requests==2.31.0
+gunicorn==21.2.0

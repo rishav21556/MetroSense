@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice & Vision Assistant - Accessibility Enhanced</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner">
+        <h1>Voice & Vision Assistant</h1>
+        <p class="subtitle">Accessible navigation assistant for visually impaired users</p>
+        <p class="subtitle" style="font-size: 1.1rem; margin-top: 0.5rem; color: #495057;">Capture images, speak your query, and get intelligent voice responses</p>
+    </header>
+    
+    <main id="main-content" role="main">
+        <div class="container">
+            <!-- Voice Recording Section -->
+            <section class="section" aria-labelledby="voice-heading">
+                <div class="section-header">
+                    <div class="section-icon" aria-hidden="true">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h2 id="voice-heading">Voice Input</h2>
+                </div>
+                
+                <div class="card">
+                    <div class="mic-container">
+                        <button 
+                            class="mic-button" 
+                            aria-label="Start recording your voice"
+                            aria-describedby="mic-description"
+                            type="button">
+                            <i class="fas fa-microphone" aria-hidden="true"></i>
+                        </button>
+                        
+                        <div class="recording-status">
+                            <div class="status">
+                                <span class="status-indicator" aria-hidden="true"></span>
+                                <span class="status-text" role="status" aria-live="polite">Microphone ready</span>
+                            </div>
+                            <small class="status-description" id="mic-description">Click the microphone button to start recording</small>
+                        </div>
+                    </div>
+                    
+                    <div class="transcription-container" role="region" aria-labelledby="transcription-label">
+                        <div class="transcribed-content">
+                            <span id="transcription-label" class="sr-only">Voice transcription</span>
+                            <div class="transcription-placeholder">Your speech will appear here after recording...</div>
+                            <div class="transcribed" role="status" aria-live="polite" aria-atomic="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Camera Section -->
+            <section class="section" aria-labelledby="camera-heading">
+                <div class="section-header">
+                    <div class="section-icon" aria-hidden="true">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h2 id="camera-heading">Camera Capture</h2>
+                </div>
+                
+                <div class="card">
+                    <div class="camera-controls" role="group" aria-label="Camera controls">
+                        <button 
+                            class="camera-button" 
+                            aria-label="Take a picture"
+                            type="button">
+                            <i class="fas fa-camera" aria-hidden="true"></i> Take Picture
+                        </button>
+                        <button 
+                            class="camera-button camera-switch" 
+                            aria-label="Switch camera"
+                            type="button">
+                            <i class="fas fa-sync-alt" aria-hidden="true"></i> Switch Camera
+                        </button>
+                    </div>
+                    
+                    <div class="camera-container">
+                        <div class="video-wrapper" role="region" aria-label="Camera viewfinder">
+                            <video 
+                                class="video" 
+                                autoplay 
+                                aria-label="Live camera feed"
+                                muted></video>
+                        </div>
+                        <canvas class="canvas" style="display: none;" aria-hidden="true"></canvas>
+                        
+                        <div class="image-preview" role="region" aria-labelledby="preview-label">
+                            <span id="preview-label" class="sr-only">Captured image preview</span>
+                            <div class="preview-placeholder">Image preview will appear here after capture</div>
+                            <img 
+                                class="captured-image" 
+                                alt="Captured image preview" 
+                                style="display: none;"
+                                role="img">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Send Query Button -->
+            <button 
+                class="send-query" 
+                disabled 
+                aria-label="Send query to AI assistant"
+                aria-describedby="send-button-help"
+                type="button">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Query
+            </button>
+            <span id="send-button-help" class="sr-only">
+                This button will be enabled once you have both captured an image and recorded your voice query
+            </span>
+            
+            <!-- Response Section -->
+            <section class="section response-container" aria-labelledby="response-heading">
+                <div class="section-header">
+                    <div class="section-icon" aria-hidden="true">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2 id="response-heading">AI Response</h2>
+                </div>
+                
+                <div 
+                    class="response" 
+                    role="region" 
+                    aria-live="polite" 
+                    aria-atomic="true"
+                    aria-label="AI assistant response">
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Hidden few-shot images -->
+    <img src="{{url_for('static',filename='pictures/fewshot1.jpg')}}" alt="" style="display:none;" class="fewshot1" aria-hidden="true">
+    <img src="{{url_for('static',filename='pictures/fewshot2.jpg')}}" alt="" style="display:none;" class="fewshot2" aria-hidden="true">
+    <img src="{{url_for('static',filename='pictures/fewshot3.jpg')}}" alt="" style="display:none;" class="fewshot3" aria-hidden="true">
+    
+    <footer role="contentinfo">
+        <p>&copy; 2025 Voice & Vision Assistant | Accessible Design for All</p>
+        <p style="margin-top: 0.5rem; font-size: 1rem;">Use Tab to navigate, Enter or Space to activate buttons</p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
