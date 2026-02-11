@@ -41,8 +41,8 @@ Create a `.env` file in the root directory:
 # OpenRouter API Key for vision model (REQUIRED)
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-# Roboflow API Key (OPTIONAL - default value works fine)
-ROBOFLOW_API_KEY=5XagyPRtCr1rJQzvdDwl
+# Roboflow API Key (REQUIRED)
+ROBOFLOW_API_KEY=your_roboflow_api_key_here
 ```
 
 **Note**: Speech recognition uses Google's FREE service (no API key needed)!

@@ -13,7 +13,7 @@ services:
       - key: OPENROUTER_API_KEY
         sync: false
       - key: ROBOFLOW_API_KEY
-        value: 5XagyPRtCr1rJQzvdDwl
+        sync: false
     autoDeploy: true
     disk:
       name: voice-vision-data

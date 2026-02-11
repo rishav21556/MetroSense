@@ -17,13 +17,18 @@ app.config['MAX_CONTENT_LENGTH'] = 256 * 1024 * 1024 * 1024  # 256MB limit
 
 # API keys from environment variables
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY", "5XagyPRtCr1rJQzvdDwl")
+ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY")
 
 # Check for required API keys (only fail in production, not during build)
 if not OPENROUTER_API_KEY and os.getenv("RENDER"):
     print("WARNING: OPENROUTER_API_KEY is not set. Please configure it in Render dashboard.")
 elif not OPENROUTER_API_KEY:
     print("WARNING: OPENROUTER_API_KEY is not set. Please check your .env file.")
+
+if not ROBOFLOW_API_KEY and os.getenv("RENDER"):
+    print("WARNING: ROBOFLOW_API_KEY is not set. Please configure it in Render dashboard.")
+elif not ROBOFLOW_API_KEY:
+    print("WARNING: ROBOFLOW_API_KEY is not set. Please check your .env file.")
 
 
 @app.route('/')
